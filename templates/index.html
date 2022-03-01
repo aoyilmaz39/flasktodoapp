@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+    <title>Todo App</title>
+</head>
+<body>
+    <div style="margin-top: 100px;" class="container"><!-- margin ile üstte boşluk oluşturuyoruz-->
+        <h3>Todo List</h3>
+        <hr>
+
+        <form action="/add" method="post"><!-- post yöntemiyle burada title alanına kullanıcının gireceği değerleri alırız. -->
+            <div class="form-group">
+                <label for="exampleInputEmail1">Todo Başlık</label>
+                <input type="text" class="form-control" name="title" id="formGroupExampleInput" placeholder="Todo Giriniz..."><br>
+                <button type="submit" class="btn btn-danger">Ekle</button>
+                <!-- type submit yaptık butona basılınca bir sonraki sayfaya gitmek için -->
+                <hr>
+
+
+            </div>
+            {% if todos!=[] %}
+            
+                <table class="table">
+
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Todo Başlık</th>
+                        <th scope="col">Todo Durum</th>
+                        <th scope="col">Durum Güncelliği</th>
+                        <th scope="col">Todo Sil</th>
+                    </tr>
+                    </thead>
+                    </tbody>
+
+                    {% for todo in todos %}
+                    <tr>
+                        <th scope="row">{{todo.id}}</th>
+                        <td>{{todo.title}}</td>
+                        {% if todo.complete==False %}
+                        <td>Tamamlanmadı</td>
+                        {% else %}
+                        <td>Tamamlandı</td>
+                        {% endif %}
+                        <td><a href="/complete/{{todo.id}}" class="btn btn-success">Tamamla</a></td>
+                        <!-- burada bir buton tanımlarız ve buna basılınca complate/id ye gitmesini istiyoruz. -->
+                        <td><a href="/delete/{{todo.id}}" class="btn btn-danger">Sil</a></td>
+
+                    </tr> 
+                    {% endfor %}
+
+                </table>
+            {% else %}
+                <div class="alert alert-warning" role="alert">
+                    Herhamgi bir Todo'nuz bulunmamaktadır.
+                </div>
+            {% endif %}
+              
+        </form>
+
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
